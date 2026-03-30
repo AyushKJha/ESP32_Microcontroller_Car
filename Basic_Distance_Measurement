@@ -1,0 +1,47 @@
+#include<Wire.h>
+#include<LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27,16,2);
+
+#define TRIG_PIN 18
+#define ECHO_PIN 2
+#define BUZZER_PIN 4
+long duration;
+int distance;
+void setup()
+{
+  pinMode(5, OUTPUT);
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+  pinMode(BUZZER_PIN,OUTPUT);
+  Wire.begin(21,22);
+  lcd.init();
+  lcd.backlight();
+}
+
+void loop()
+{
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2); // Wait for 1000 millisecond(s)
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+  duration=pulseIn(ECHO_PIN, HIGH);
+  distance=duration*0.034/2;
+  lcd.setCursor(0,0);
+  lcd.print("Distance:");
+  lcd.print(distance);
+  lcd.print("cm...");
+  lcd.setCursor(0,1);
+  if(distance <= 15)
+  {
+    lcd.print(" STOP... ");
+    
+    digitalWrite(4, HIGH);
+  }
+  else
+  {
+    lcd.print(" Proceed");
+    digitalWrite(4, LOW);
+  }
+  delay(500);
+}
