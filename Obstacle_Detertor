@@ -1,0 +1,142 @@
+#include<Wire.h>
+#include<LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27,16,2);
+
+#define TRIG_PIN 18
+#define ECHO_PIN 2
+#define BUZZER_PIN 4
+long duration;
+int distance;
+void setup()
+{
+  pinMode(5, OUTPUT);
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+  pinMode(BUZZER_PIN,OUTPUT);
+  Wire.begin(21,22);
+  lcd.init();
+  lcd.backlight();
+}
+
+void loop()
+{
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2); // Wait for 1000 millisecond(s)
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+  duration=pulseIn(ECHO_PIN, HIGH);
+  distance=duration*0.034/2;
+  lcd.setCursor(0,0);
+  lcd.print("Distance:");
+  lcd.print(distance);
+  lcd.print("cm...");
+  lcd.setCursor(0,1);
+  if(distance <= 15)
+  {
+    lcd.print(" STOP..…
+[13:38, 26/03/2026] +91 84316 20464: Guys come fast the session has started..!!
+[06:01, 27/03/2026] +91 877 828 1398: Hey girls, For SPORTERA-2026, we are forming a ECE and ECS Girls Team for Throwball,basketball,football 
+If you're interested, please contact 
+Divyasree:8310936417
+Adithi:+91 78926 66498
+[13:44, 27/03/2026] +91 78921 13994: Guys come fast the session has started..!!
+[15:37, 27/03/2026] +91 78921 13994: #include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+// LCD (change 0x27 to 0x3F if needed)
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+// Ultrasonic pins
+#define TRIG_PIN 5
+#define ECHO_PIN 18
+
+// Motor pins
+int motor1Pin1 = 13;
+int motor1Pin2 = 12;
+int motor2Pin1 = 14;
+int motor2Pin2 = 27;
+
+long duration;
+float distance;
+
+void setup() {
+  Serial.begin(115200);
+
+  // ✅ Explicit I2C pins (IMPORTANT for ESP32)
+  Wire.begin(21, 22);  // SDA = 21, SCL = 22
+
+  // LCD init
+  lcd.init();
+  lcd.backlight();
+
+  // Ultrasonic setup
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+
+  // Motor pins
+  pinMode(motor1Pin1, OUTPUT);
+  pinMode(motor1Pin2, OUTPUT);
+  pinMode(motor2Pin1, OUTPUT);
+  pinMode(motor2Pin2, OUTPUT);
+
+  lcd.setCursor(0, 0);
+  lcd.print("System Ready");
+  delay(2000);
+  lcd.clear();
+}
+
+void loop() {
+  // 🔊 Send ultrasonic pulse
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+
+  // 📡 Read echo
+  duration = pulseIn(ECHO_PIN, HIGH);
+
+  // 📏 Convert to distance (cm)
+  distance = duration * 0.034 / 2;
+
+  // 🖥 Display on LCD
+  lcd.setCursor(0, 0);
+  lcd.print("Distance:      ");
+  lcd.setCursor(0, 1);
+  lcd.print(distance);
+  lcd.print(" cm   ");
+
+  // 🖨 Serial monitor
+  Serial.print("Distance: ");
+  Serial.println(distance);
+
+  // 🚗 Decision logic
+  if (distance > 0 && distance < 15) {
+    stopCar();
+    lcd.setCursor(10, 1);
+    lcd.print("STOP ");
+  } else {
+    moveForward();
+    lcd.setCursor(10, 1);
+    lcd.print("GO   ");
+  }
+
+  delay(200);
+}
+
+// 🚗 Move Forward
+void moveForward() {
+  digitalWrite(motor1Pin1, HIGH);
+  digitalWrite(motor1Pin2, LOW);
+  digitalWrite(motor2Pin1, LOW);
+  digitalWrite(motor2Pin2, HIGH);
+}
+
+// 🛑 Stop Car
+void stopCar() {
+  digitalWrite(motor1Pin1, LOW);
+  digitalWrite(motor1Pin2, LOW);
+  digitalWrite(motor2Pin1, LOW);
+  digitalWrite(motor2Pin2, LOW);
+}
