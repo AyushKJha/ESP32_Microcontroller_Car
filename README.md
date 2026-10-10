@@ -1,45 +1,51 @@
-# ESP32_Microcontroller_Car
-Smart ESP32 Controlled Cars
-📌 Overview
-This repository contains a set of ESP32-based smart car prototypes developed during a 5-day Skill Lab conducted at our college.
-The project focuses on wireless control, voice interaction, and autonomous navigation using embedded systems.
+<img src="docs/banner.svg" alt="Project overview" width="100%">
 
-🔧 Features
-1. 📱 Bluetooth Controlled Car
-Controlled via Android smartphone using Bluetooth
-Uses ESP32 for communication and control
-Simple interface: connect → control → move
-2. 🎙️ Voice Controlled Car
-Operates using voice commands from a mobile device
-Commands like:
-Forward
-Backward
-Left / Right
-Stop
-Demonstrates voice-based human-machine interaction
-3. 📡 Obstacle Avoidance Car
-Uses an ultrasonic sensor mounted on a rotating mechanism
-Scans environment at angles:
-0° | 30° | 45° | 60° | 180°
-Detects obstacles and changes direction in real-time
-Implements basic autonomous navigation logic
-🛠️ Tech Stack
-Microcontroller: ESP32
-Communication: Bluetooth
-Sensors: Ultrasonic Sensor (HC-SR04 or similar)
-Programming: Arduino IDE / Embedded C
-Hardware: Motors, Motor Driver (L298N or similar), Servo Motor
-📚 What I Learned
-Working with ESP32 for IoT applications
-Implementing Bluetooth communication
-Integrating sensors and actuators
-Basics of robotics and automation
-Rapid prototyping under time constraints
-🎯 Future Improvements
-Mobile app UI for better control
-Wi-Fi based remote control
-AI-based obstacle detection
-Camera integration for live streaming
-🧑‍🏫 Acknowledgment
+# ESP32 Smart Car Lab
+### Bluetooth commands. Sensor readings. Physical movement.
 
-This project was developed as part of a 5-day Skill Lab and was successfully presented to the HOD and faculty members of the ECE Department.
+Experiments from a five-day college Skill Lab: controlling a small car over Bluetooth, measuring distance with an ultrasonic sensor, and exploring motor-control variations.
+
+**ESP32 · Arduino / C++ · Bluetooth Serial · I²C LCD**
+
+[Project demo folder](https://drive.google.com/drive/folders/1zajK2-AtPhMCfp8Sq6LwE2uaqMEDQnbu) — access follows the folder's sharing settings.
+
+## Start with the Bluetooth car
+
+[Android_Controlled_Car](Android_Controlled_Car) advertises the Bluetooth name **ESP32_CAR** and accepts one-character commands:
+
+| Command | Action |
+| --- | --- |
+| `F` | Forward |
+| `B` | Backward |
+| `L` | Turn left |
+| `R` | Turn right |
+| `S` | Stop |
+
+The sketch uses motor pins **13, 12, 14, 27** and a 16×2 I²C LCD at address **0x27**. Check these against your own wiring and motor driver before powering the assembly.
+
+## Sketch inventory
+
+| File | What is actually in the source |
+| --- | --- |
+| [Android_Controlled_Car](Android_Controlled_Car) | Bluetooth command input, motor direction control, and LCD initialization |
+| [Basic_Distance_Measurement](Basic_Distance_Measurement) | Ultrasonic distance measurement experiment |
+| [Obstacle_Detertor](Obstacle_Detertor) | Distance-based stop/forward experiment |
+| [Range_detector_using_rotator](Range_detector_using_rotator) | Despite its historical filename, this contains Bluetooth text commands and PWM motor control, not a servo scanning implementation |
+
+The text-command/PWM experiment needs review of command buffering and ESP32 LEDC API use before relying on it. A complete autonomous navigation system is not established by these files.
+
+## Open in Arduino IDE
+
+1. Install the ESP32 board support and select a board that supports the sketch's Bluetooth Serial API.
+2. Create a separate Arduino sketch for the experiment you want to inspect.
+3. Copy the source into its matching `.ino` file; the original files here have no extension.
+4. Install the libraries used by that sketch, including `LiquidCrystal_I2C` where applicable.
+5. Verify board settings, pins, wiring, and power before compiling and uploading.
+
+These are independent lab sketches, not files intended to be compiled together. No custom Android controller APK is included; a compatible Bluetooth serial controller can supply the command characters.
+
+## Status
+
+Hardware lab work and source experiments. Build compatibility and physical behavior have not been revalidated as part of this documentation cleanup.
+
+**Ayush Kumar Jha** · [Profile](https://github.com/AyushKJha)
