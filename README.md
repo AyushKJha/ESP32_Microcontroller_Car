@@ -1,4 +1,4 @@
-<img src="docs/banner.svg" alt="Project overview" width="100%">
+<img src="docs/banner.svg" alt="ESP32 Microcontroller Car project illustration" width="100%">
 
 # ESP32 Smart Car Lab
 ### Bluetooth commands. Sensor readings. Physical movement.
