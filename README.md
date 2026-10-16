@@ -9,8 +9,6 @@ Experiments from a five-day college Skill Lab: controlling a small car over Blue
 
 [Project demo folder](https://drive.google.com/drive/folders/1zajK2-AtPhMCfp8Sq6LwE2uaqMEDQnbu) — access follows the folder's sharing settings.
 
-> **[Step-by-step user guide (PDF)](docs/USER_GUIDE.pdf)**
-
 ## Start with the Bluetooth car
 
 [Android_Controlled_Car](Android_Controlled_Car) advertises the Bluetooth name **ESP32_CAR** and accepts one-character commands:
@@ -24,6 +22,16 @@ Experiments from a five-day college Skill Lab: controlling a small car over Blue
 | `S` | Stop |
 
 The sketch uses motor pins **13, 12, 14, 27** and a 16×2 I²C LCD at address **0x27**. Check these against your own wiring and motor driver before powering the assembly.
+
+### Upload and drive
+
+1. Choose one experiment from the inventory and open its extensionless source file.
+2. In Arduino IDE, create a sketch with the matching name, copy in that source, and select a compatible ESP32 board and port.
+3. Install the libraries used by that sketch, then verify every pin against your wiring and motor-driver documentation before connecting power.
+4. For `Android_Controlled_Car`, upload the sketch, pair a Bluetooth serial controller with **ESP32_CAR**, and send `F`, `B`, `L`, `R`, or `S` to move or stop.
+5. Test with the drive wheels raised and a current-limited supply before placing the car on the floor.
+
+These independent sketches have not been revalidated on hardware. Incorrect wiring or power can damage components; this repository does not include an APK or a bundled controller app.
 
 ## Sketch inventory
 
