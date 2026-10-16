@@ -9,6 +9,8 @@ Experiments from a five-day college Skill Lab: controlling a small car over Blue
 
 [Project demo folder](https://drive.google.com/drive/folders/1zajK2-AtPhMCfp8Sq6LwE2uaqMEDQnbu) — access follows the folder's sharing settings.
 
+> **[Step-by-step user guide (PDF)](docs/USER_GUIDE.pdf)**
+
 ## Start with the Bluetooth car
 
 [Android_Controlled_Car](Android_Controlled_Car) advertises the Bluetooth name **ESP32_CAR** and accepts one-character commands:
