@@ -9,9 +9,10 @@ Experiments from a five-day college Skill Lab: controlling a small car over Blue
 
 [Project demo folder](https://drive.google.com/drive/folders/1zajK2-AtPhMCfp8Sq6LwE2uaqMEDQnbu) — access follows the folder's sharing settings.
 
+
 ## Start with the Bluetooth car
 
-[Android_Controlled_Car](Android_Controlled_Car) advertises the Bluetooth name **ESP32_CAR** and accepts one-character commands:
+[Android_Controlled_Car](Android_Controlled_Car/Android_Controlled_Car.ino) advertises the Bluetooth name **ESP32_CAR** and accepts one-character commands:
 
 | Command | Action |
 | --- | --- |
@@ -37,20 +38,25 @@ These independent sketches have not been revalidated on hardware. Incorrect wiri
 
 | File | What is actually in the source |
 | --- | --- |
-| [Android_Controlled_Car](Android_Controlled_Car) | Bluetooth command input, motor direction control, and LCD initialization |
-| [Basic_Distance_Measurement](Basic_Distance_Measurement) | Ultrasonic distance measurement experiment |
-| [Obstacle_Detertor](Obstacle_Detertor) | Distance-based stop/forward experiment |
-| [Range_detector_using_rotator](Range_detector_using_rotator) | Despite its historical filename, this contains Bluetooth text commands and PWM motor control, not a servo scanning implementation |
+| [Android_Controlled_Car](Android_Controlled_Car/Android_Controlled_Car.ino) | Bluetooth command input, motor direction control, and LCD initialization |
+| [Basic_Distance_Measurement](Basic_Distance_Measurement/Basic_Distance_Measurement.ino) | Ultrasonic distance measurement experiment |
+| [Obstacle_Detector](Obstacle_Detector/Obstacle_Detector.ino) | Distance-based stop/forward experiment |
+| [Range_detector_using_rotator](Range_detector_using_rotator/Range_detector_using_rotator.ino) | Despite its historical filename, this contains Bluetooth text commands and PWM motor control, not a servo scanning implementation |
 
 The text-command/PWM experiment needs review of command buffering and ESP32 LEDC API use before relying on it. A complete autonomous navigation system is not established by these files.
+
+## Wiring notes for the ultrasonic sketches
+
+- **Use a voltage divider on ECHO.** The HC-SR04 echo pin outputs 5 V, but ESP32 inputs are 3.3 V. A 1 kΩ / 2 kΩ divider brings it down safely.
+- **Avoid GPIO 2 for ECHO.** The sketches use GPIO 2, which is a boot-strapping pin wired to the onboard LED and can stop the board from booting. Input-only pins such as GPIO 34 or 35 are safer; change `ECHO_PIN` to match.
+- `pulseIn` now times out after 30 ms. With no echo, the loop keeps running instead of freezing for a second.
 
 ## Open in Arduino IDE
 
 1. Install the ESP32 board support and select a board that supports the sketch's Bluetooth Serial API.
-2. Create a separate Arduino sketch for the experiment you want to inspect.
-3. Copy the source into its matching `.ino` file; the original files here have no extension.
-4. Install the libraries used by that sketch, including `LiquidCrystal_I2C` where applicable.
-5. Verify board settings, pins, wiring, and power before compiling and uploading.
+2. Open the experiment's folder, for example `Obstacle_Detector/Obstacle_Detector.ino`. Each folder is a ready Arduino sketch.
+3. Install the libraries used by that sketch, including `LiquidCrystal_I2C` where applicable.
+4. Verify board settings, pins, wiring, and power before compiling and uploading.
 
 These are independent lab sketches, not files intended to be compiled together. No custom Android controller APK is included; a compatible Bluetooth serial controller can supply the command characters.
 
